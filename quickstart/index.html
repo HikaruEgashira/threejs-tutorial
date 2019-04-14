@@ -19,9 +19,11 @@
 
             const scene = new THREE.Scene();
 
+            // new THREE.PerspectiveCamera(画角, アスペクト比)
             const camera = new THREE.PerspectiveCamera(45, width / height);
             camera.position.set(0, 0, +1000);
 
+            // new THREE.BoxGeometry(幅, 高さ, 奥行き)
             const geometry = new THREE.BoxGeometry(400, 400, 400);
             const material = new THREE.MeshNormalMaterial();
             const box = new THREE.Mesh(geometry, material);
