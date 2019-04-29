@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MeshNornalMaterial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
+    <script>
+        window.addEventListener('load', init);
+
+        function init() {
+            const width = 960;
+            const height = 540;
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#main'),
+                antialias: true
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, width / height);
+            camera.position.set(0, 0, +1000);
+
+            const geometry = new THREE.TorusGeometry(300, 100, 64, 100);
+            const material = new THREE.MeshNormalMaterial();
+            const mesh = new THREE.Mesh(geometry, material);
+
+            scene.add(mesh);
+            tick();
+
+            function tick() {
+                mesh.rotation.x += 0.01;
+                mesh.rotation.y += 0.01;
+                renderer.render(scene, camera);
+                requestAnimationFrame(tick);
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="main"></canvas>
+</body>
+</html>
