@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fog</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
+    <script>
+        window.addEventListener('load', init);
+        function init() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#main'),
+                antialias: true,
+                devicePixelRatio: window.devicePixelRatio
+            });
+            renderer.setSize(width, height);
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x000000, 50, 2000);
+
+            const camera = new THREE.PerspectiveCamera(45, width / height);
+            camera.position.set(0, 0, +1000);
+
+            const group = new THREE.Group();
+            scene.add(group);
+            const geometry = new THREE.BoxBufferGeometry(50, 50, 50);
+            const material = new THREE.MeshStandardMaterial();
+
+            for (let i = 0; i < 100; i++) {
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.x = (Math.random() - 0.5) * 2000;                
+                mesh.position.y = (Math.random() - 0.5) * 2000;                
+                mesh.position.z = (Math.random() - 0.5) * 2000;                
+                mesh.rotation.x = Math.random() * 2 * Math.PI;
+                mesh.rotation.y = Math.random() * 2 * Math.PI;
+                mesh.rotation.z = Math.random() * 2 * Math.PI;
+                group.add(mesh);
+            }
+
+            scene.add(new THREE.DirectionalLight(0xff0000, 2));
+            scene.add(new THREE.AmbientLight(0x00ffff));
+
+            tick();
+
+            function tick() {
+                group.rotateY(0.0001);
+                renderer.render(scene, camera);
+                requestAnimationFrame(tick);
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="main"></canvas>
+</body>
+</html>
